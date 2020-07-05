@@ -61,7 +61,9 @@ DOWNLOADER_MIDDLEWARES = {
 
 HTTP_PROXY_LIST = [
     'http://52.179.231.206:80',
-    'http://95.0.194.241:9090',
+    'http://101.200.127.149:3129',
+    "http://101.37.118.54:8888"
+    # 'http://95.0.194.241:9090'
 ]
 
 # Enable or disable extensions
@@ -72,9 +74,9 @@ HTTP_PROXY_LIST = [
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'proxytest.pipelines.ProxytestPipeline': 300,
-#}
+ITEM_PIPELINES = {
+   'proxytest.pipelines.ProxytestPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
