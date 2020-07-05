@@ -51,9 +51,11 @@ ROBOTSTXT_OBEY = False
 
 # Enable or disable downloader middlewares
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
+# DOWNLOADER_MIDDLEWARES = {
 #    'douban.middlewares.DoubanDownloaderMiddleware': 543,
-#}
+#    # 'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': None,  # 通过后面的值设置优先级，值越小优先级越大
+#    'scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware': 400
+# }
 
 # Enable or disable extensions
 # See https://docs.scrapy.org/en/latest/topics/extensions.html
