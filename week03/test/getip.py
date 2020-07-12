@@ -17,15 +17,18 @@
 #     portlist.append(port.strip())
 #
 # print(portlist)
-def o2f():
-    # with open('1.txt','w+') as f:
-    #     return f
-    return  open("1.txt",'w+')
+# def o2f():
+#     # with open('1.txt','w+') as f:
+#     #     return f
+#     return  open("1.txt",'w+')
+#
+# newf = o2f()
+# newf.write("hello")
+# newf.write("hello")
+# newf.write("hello")
+# newf.write("hello")
+# newf.writelines("hello world")
+# newf.writelines("hello world")
 
-newf = o2f()
-newf.write("hello")
-newf.write("hello")
-newf.write("hello")
-newf.write("hello")
-newf.writelines("hello world")
-newf.writelines("hello world")
+import os
+print(os.getppid())

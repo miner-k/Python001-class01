@@ -20,6 +20,8 @@ import platform
 import re
 import telnetlib
 import argparse
+from multiprocessing.pool import Pool
+
 
 def isWindows():
     if platform.system() == "Windows":
@@ -29,6 +31,8 @@ def isWindows():
 
 
 def pingIP(ip):
+    print("PingIP PID: {}".format(os.getpid()))
+    print("PingIP 父进程PID: {}".format(os.getppid()))
     # ip = '192.168.47.2'
     ping = os.popen("ping {} -n 1".format(ip)).read()
     pingRes = re.compile(r'来自..+', re.M).findall(ping)
@@ -40,6 +44,10 @@ def pingIP(ip):
         print('{} ping 不通'.format(ip))
 
 def get_ip_status(ip,port):
+
+    print("get_ip_status PID ：{}".format(os.getpid()))
+    print("get_ip_status 父进程 PID ：{}".format(os.getppid()))
+
     server = telnetlib.Telnet()      # 创建一个Telnet对象
     try:
         server.open(ip,port)         # 利用Telnet对象的open方法进行tcp链接
@@ -69,6 +77,7 @@ def getIPList(ipstr):
 
 
 def getPortList(portstr):
+
     portlist = []
     # print('$'*20)
     # print(portstr.split(','))
@@ -83,22 +92,25 @@ def save2file(filename):
         os.remove(filename)
     return open(filename,'w+')
 
+def getPingRes(parser,pool):
 
-def args(parser):
-
-    # if parser.outfile:
-    #     global outfile
-    #     outfile = save2file(parser.outfile)
-
+    print("ping PID: {}".format(os.getpid()))
+    print("ping 父进程PID: {}".format(os.getppid()))
     if parser.type == 'ping' and parser.outfile:
         outfile = save2file(parser.outfile)
         for ip in getIPList(parser.ipstr):
-            outfile.write(pingIP(ip) + '\n')
+            # outfile.write(pingIP(ip) + '\n')
+            pool.apply_async(outfile.write,(pingIP(ip) + '\n',))
         outfile.close()
     elif parser.type == 'ping':
         for ip in getIPList(parser.ipstr):
-            pingIP(ip)
-
+            pool.apply_async(pingIP,(ip,))
+    pool.close()
+    pool.join()
+    pool.terminate()
+def getTcpPortsRes(parser,pool):
+    print("tcpport PID: {}".format(os.getpid()))
+    print("tcpport 父进程PID: {}".format(os.getppid()))
     if parser.type == 'tcp' and parser.outfile:
         outfile = save2file(parser.outfile)
         if not parser.ports:
@@ -107,7 +119,8 @@ def args(parser):
             # print(getIPList(parser.ports))
             for port in getPortList(parser.ports):
                 # print(port)
-                outfile.write(get_ip_status(ip,port) + '\n')
+                # outfile.write(get_ip_status(ip,port) + '\n')
+                pool.apply_async(outfile.write,(get_ip_status(ip,port) + '\n',))
 
         outfile.close()
     elif parser.type == 'tcp':
@@ -117,7 +130,34 @@ def args(parser):
             # print(getIPList(parser.ports))
             for port in getPortList(parser.ports):
                 # print(port)
-                get_ip_status(ip,port)
+                pool.apply_async(get_ip_status,args=(ip,port))
+    pool.close()
+    pool.join()
+    pool.terminate()
+
+
+def args(parser):
+
+    # if parser.outfile:
+    #     global outfile
+    #     outfile = save2file(parser.outfile)
+
+    pool = Pool(int(parser.threadNum))
+    print("父进程PID：{}".format(os.getpid()))
+
+    if parser.type == 'ping':
+        getPingRes(parser,pool)
+        # pool.apply_async(getPingRes,args=(parser,))
+    elif parser.type == 'tcp':
+        # pool.apply_async(getTcpPortsRes,args=(parser,))
+        getTcpPortsRes(parser,pool)
+
+    pool.close()
+    pool.join()
+    pool.terminate()
+
+
+
 
 
 
