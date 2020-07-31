@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from django.shortcuts import redirect
 
 # Create your views here.
@@ -18,3 +18,6 @@ def printstr(request,**str1):
 
 def myyear(request,year):
     return render(request,'yearview.html')
+
+def myredicet(request,year):
+    return  redirect('/2020.html')
