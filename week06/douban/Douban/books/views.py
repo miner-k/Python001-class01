@@ -8,5 +8,8 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 
 
-def showBook(request):
+def default(request):
     return HttpResponse("Hello Django!")
+
+def showbooks(request):
+    return  render(request,'yingping.html')
