@@ -8,6 +8,9 @@ from django.shortcuts import redirect
 # Create your views here.
 from django.http import HttpResponse
 
+from .models import Name
+
+
 def index(request):
     return HttpResponse("Hello Django!")
 
@@ -21,3 +24,7 @@ def myyear(request,year):
 
 def myredicet(request,year):
     return  redirect('/2020.html')
+
+def show_books(request):
+    n = Name.objects.all()
+    return render(request, 'bookslist.html', locals())

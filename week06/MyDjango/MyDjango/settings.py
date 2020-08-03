@@ -89,7 +89,7 @@ DATABASES = {
         'PASSWORD': '1234',
         'HOST': '192.168.47.100',
         'PORT': '3306',
-        'OPTIONS': {'charset': 'utf8'},
+        'OPTIONS': {'charset': 'utf8mb4'},
     }
 }
 # Password validation

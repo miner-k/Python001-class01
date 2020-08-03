@@ -9,13 +9,13 @@
     </thead>
     <tbody>
         {% for short in shorts %}
-            {% if short.star_level > 3 %}
+
                 <tr>
                     <td width="3%" align="center">{{short.id}}</td>
-                    <td>{{short.comment}}</td>
-                    <td width="3%" align="center" style="background-color:coral">{{short.star_level}}</td>
+                    <td>{{short.context}}</td>
+                    <td width="3%" align="center" style="background-color:coral">{{short.stars}}</td>
                 </tr>
-            {% endif %}
+
         {% endfor %}
     </tbody>
 </table>
