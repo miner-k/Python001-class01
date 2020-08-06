@@ -12,3 +12,14 @@ class Name(models.Model):
     name = models.CharField(max_length=50)
     author = models.CharField(max_length=50)
     stars = models.CharField(max_length=10)
+
+
+class T1(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    n_star = models.IntegerField()
+    short = models.CharField(max_length=400)
+    sentiment = models.FloatField()
+
+    class Meta:
+        managed = False
+        db_table = 't1'
