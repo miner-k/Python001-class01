@@ -54,7 +54,7 @@ if __name__ == '__main__':
     # 增加一只猫到动物园
     z.add_animal(cat1)
     # 动物园是否有猫这种动物
-    # have_cat = getattr(z, 'Cat')
-    #
-    # print(have_cat)
+    have_cat = getattr(z,'cat1')
+
+    print(have_cat)
 
