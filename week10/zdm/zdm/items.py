@@ -9,4 +9,10 @@ import scrapy
 class ZdmItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    pass
+    product_name = scrapy.Field()
+    product_comment_url = scrapy.Field()
+    product_comment_count = scrapy.Field()
+
+class ZdmComment(scrapy.Item):
+    product_id = scrapy.Field()
+    product_comment_content = scrapy.Field()
