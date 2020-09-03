@@ -12,6 +12,7 @@ class ZdmItem(scrapy.Item):
     product_name = scrapy.Field()
     product_comment_url = scrapy.Field()
     product_comment_count = scrapy.Field()
+    product_comment_content = scrapy.Field()
 
 class ZdmComment(scrapy.Item):
     product_id = scrapy.Field()

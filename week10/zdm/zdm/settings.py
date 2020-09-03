@@ -66,6 +66,7 @@ CONCURRENT_REQUESTS = 1
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'zdm.pipelines.ZdmPipeline': 300,
+   'zdm.pipelines.ConnDB': 300,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
