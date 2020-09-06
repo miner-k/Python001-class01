@@ -26,16 +26,20 @@ def comment_analyze(table_name,engine):
     sql = "select * from " + table_name + ";"
     qury_comment_pd = pd.read_sql(sql,engine)
     product_id_list = []
-    for num in range(0,11):
+    for num in range(0,qury_comment_pd.shape[0]):
         coment = qury_comment_pd.iloc[num]['comment_text'].strip('[').strip(']').split("',")
         emotional_value = []
         for line in coment:
+            if line is '':
+                continue
             line = line.strip("'").strip(' ')
             emotional_value.append(SnowNLP(line).sentiments)
 
         product_pd = pd.DataFrame(data={'comment_text' : pd.Series(data=coment),'emotional_value': pd.Series(data=emotional_value)})
         product_pd['product_id'] = qury_comment_pd.iloc[num]['product_id']
-        product_pd.to_sql(name=str(qury_comment_pd.iloc[num]['product_id']),con=engine,if_exists='replace',index=False)
+        # product_pd['id'] = 0
+        product_pd['id'] = range(product_pd.shape[0])
+        product_pd.to_sql(name='Pid_' + str(qury_comment_pd.iloc[num]['product_id']),con=engine,if_exists='replace',index=False)
 
         product_id_list.append(qury_comment_pd.iloc[num]['product_id'])
     comment_analyze_his = pd.DataFrame({"product_id": pd.Series(data=product_id_list)})
@@ -50,6 +54,6 @@ if __name__ == '__main__':
     engine = create_engine('mysql+pymysql://root:1234@192.168.47.100:3306/week10')
     now_day = time.strftime("%Y_%m_%d", time.localtime())
     table_name = 'comment_' + now_day
-    # table_name = 'comment_' + "2020_09_03"
+    # table_name = 'comment_' + "2020_09_04"
 
     comment_analyze(table_name,engine)

@@ -50,7 +50,7 @@ def index(request):
     minus = queryset.filter(**condtions).count()
 
     print('star_avg：' + sent_avg + "  sent_avg:" + sent_avg)
-    return render(request,'index.html',locals())
+    return render(request,'index2.html',locals())
 
 def books_short(request):
     ###  从models取数据传给template  ###
